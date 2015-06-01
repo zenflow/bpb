@@ -1,0 +1,39 @@
+{
+  "name": "browserify-process.browser",
+  "version": "1.0.0",
+  "description": "Replaces `process.browser` with `true`, so that server-side-only code can be stripped out",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://zenflow@github.com/zenflow/browserify-process.browser.git"
+  },
+  "keywords": [
+    "browserify",
+    "transform",
+    "isomorphic",
+    "simplify",
+    "replace",
+    "server",
+    "client",
+    "security",
+    "optimization",
+    "optimisation"
+  ],
+  "author": "Matthew Francis Brunetti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zenflow/browserify-process.browser/issues"
+  },
+  "homepage": "https://github.com/zenflow/browserify-process.browser#readme",
+  "devDependencies": {
+    "browserify": "^10.2.3",
+    "tape": "^4.0.0"
+  },
+  "dependencies": {
+    "falafel": "^1.1.0",
+    "through2": "^0.6.5"
+  }
+}
