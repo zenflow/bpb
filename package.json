@@ -1,7 +1,7 @@
 {
-  "name": "browserify-process.browser",
-  "version": "1.0.0",
-  "description": "Replaces `process.browser` with `true`, so that server-side-only code can be stripped out",
+  "name": "bpb",
+  "version": "0.0.1",
+  "description": "Browserify transform to replace `process.browser` with `true`, so that server-side-only code can be stripped out",
   "main": "lib/index.js",
   "scripts": {
     "test": "node tests/index.js"
@@ -29,11 +29,10 @@
   },
   "homepage": "https://github.com/zenflow/browserify-process.browser#readme",
   "devDependencies": {
-    "browserify": "^10.2.3",
+    "concat-stream": "^1.4.8",
     "tape": "^4.0.0"
   },
   "dependencies": {
-    "falafel": "^1.1.0",
     "through2": "^0.6.5"
   }
 }
