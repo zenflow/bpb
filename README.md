@@ -1,5 +1,5 @@
 # bpb
-Browserify transform to replace references to `process.browser` with `true`, so that server-side-only code can be stripped out of isomorphic modules
+Browserify transform to replace references to global `process.browser` with `true`, so that server-side-only code can be stripped out of isomorphic modules for optimization and security
 
 [![build status](https://travis-ci.org/zenflow/bpb.svg?branch=master)](https://travis-ci.org/zenflow/bpb?branch=master)
 [![dependencies](https://david-dm.org/zenflow/bpb.svg)](https://david-dm.org/zenflow/bpb)
