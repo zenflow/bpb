@@ -1,7 +1,7 @@
 {
   "name": "bpb",
   "version": "0.0.1",
-  "description": "Browserify transform to replace `process.browser` with `true`, so that server-side-only code can be stripped out",
+  "description": "Browserify transform to replace references to `process.browser` with `true`, so that server-side-only code can be stripped out of isomorphic modules",
   "main": "lib/index.js",
   "scripts": {
     "test": "node tests/index.js"
