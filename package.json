@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://zenflow@github.com/zenflow/browserify-process.browser.git"
+    "url": "git+https://zenflow@github.com/zenflow/bpb.git"
   },
   "keywords": [
     "browserify",
@@ -25,9 +25,9 @@
   "author": "Matthew Francis Brunetti",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zenflow/browserify-process.browser/issues"
+    "url": "https://github.com/zenflow/bpb/issues"
   },
-  "homepage": "https://github.com/zenflow/browserify-process.browser#readme",
+  "homepage": "https://github.com/zenflow/bpb#readme",
   "devDependencies": {
     "concat-stream": "^1.4.8",
     "tape": "^4.0.0"
