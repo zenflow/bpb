@@ -2,44 +2,58 @@ var test = require('tape');
 var concat = require('concat-stream');
 var bpb = require('../lib');
 
-test('works', function(t){
-    t.plan(1);
-    testSource(t, '(function(){return !process.browser ? 1 : 2; })(); ',
-                '(function(){return !true ? 1 : 2; })(); ');
-});
-test('excludes occurrences in scope where `process` identifier is overridden', function(t){
-    t.plan(12);
-    testSource(t, 'foo(process.browser); var process; ');
-    testSource(t, 'foo(process.browser); function process(){} ');
-    testSource(t, '(function(){foo(process.browser); })(); var process; ');
-    testSource(t, '(function(){foo(process.browser); })(); function process(){} ');
-    testSource(t, '(function(){foo(process.browser); var process; })(); ');
-    testSource(t, '(function(){foo(process.browser); function process(){} })(); ');
-    testSource(t, '(function(process){foo(process.browser); })(); ');
-    testSource(t, '(function process(){foo(process.browser); })(); ');
-    // nested function scopes
-    testSource(t, '(function(){(function(){foo(process.browser); })(); })(); var process; ');
-    testSource(t, '(function(){(function(){foo(process.browser); })(); })(); function process(){} ');
-    testSource(t, '(function(process){(function(){foo(process.browser); })(); })(); ');
-    testSource(t, '(function process(){(function(){foo(process.browser); })(); })(); ');
-});
-test('includes occurrences where `process` is overridden in subscope', function(t){
-    t.plan(4);
-    testSource(t, '(function(){var process; })(); foo(process.browser); ',
-                  '(function(){var process; })(); foo(true); ');
-    testSource(t, '(function(){function process(){} })(); foo(process.browser); ',
-                  '(function(){function process(){} })(); foo(true); ');
-    testSource(t, '(function(process){})(); foo(process.browser); ',
-                  '(function(process){})(); foo(true); ');
-    testSource(t, '(function process(){})(); foo(process.browser); ',
-                  '(function process(){})(); foo(true); ');
-});
+test('works', getTest([
+    {
+        source: 'foo(process.browser); ',
+        expected: 'foo(true); '
+    },
+    {
+        source: '(function(){return !process.browser ? 1 : 2; })(); ',
+        expected: '(function(){return !true ? 1 : 2; })(); '
+    }
+]));
 
-function testSource(t, source, expected){
-    expected = typeof expected == 'undefined' ? source : expected;
-    concat(source)
-        .pipe(bpb())
-        .pipe(concat(function(data){
-            t.equal(data.toString('utf8'), expected);
-        }));
+test('excludes occurrences in scope where `process` identifier is overridden', getTest([
+    'foo(process.browser); var process; ',
+    'foo(process.browser); function process(){} ',
+    '(function(){foo(process.browser); })(); var process; ',
+    '(function(){foo(process.browser); })(); function process(){} ',
+    '(function(){foo(process.browser); var process; })(); ',
+    '(function(){foo(process.browser); function process(){} })(); ',
+    '(function(process){foo(process.browser); })(); ',
+    '(function process(){foo(process.browser); })(); '
+]));
+
+test('includes occurrences where `process` is overridden in subscope', getTest([
+    {
+        source: '(function(){var process; })(); foo(process.browser); ',
+        expected: '(function(){var process; })(); foo(true); '
+    },
+    {
+        source: '(function(){function process(){} })(); foo(process.browser); ',
+        expected: '(function(){function process(){} })(); foo(true); '
+    },
+    {
+        source: '(function(process){})(); foo(process.browser); ',
+        expected: '(function(process){})(); foo(true); '
+    },
+    {
+        source:'(function process(){})(); foo(process.browser); ',
+        expected: '(function process(){})(); foo(true); '
+    }
+]));
+
+function getTest(test_cases){
+    return function (t) {
+        t.plan(test_cases.length);
+        test_cases.forEach(function(test_case){
+            var source = typeof test_case == 'object' ? test_case.source : test_case;
+            var expected = typeof test_case == 'object' ? test_case.expected : test_case;
+            concat(source)
+                .pipe(bpb())
+                .pipe(concat(function(data){
+                    t.equal(data.toString('utf8'), expected);
+                }));
+        })
+    };
 }
