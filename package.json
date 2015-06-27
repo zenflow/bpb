@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/zenflow/bpb#readme",
   "devDependencies": {
-    "concat-stream": "^1.4.8",
+    "concat-stream": "https://github.com/zenflow/concat-stream/tarball/d7e8874b6182017a36b79d0c74ee90a919f26699",
     "tape": "^4.0.0"
   },
   "dependencies": {
