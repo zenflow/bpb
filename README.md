@@ -84,10 +84,10 @@ Either way, it takes no options.
   var browserify = require('browserify');
   var fs = require('fs');
   browserify('input.js')
-    .transform('bpb')
-	  .transform('unreachable-branch-transform')
-	  .bundle()
-	  .pipe(fs.createWriteStream('output.js'));
+  	.transform('bpb')
+  	.transform('unreachable-branch-transform')
+  	.bundle()
+  	.pipe(fs.createWriteStream('output.js'));
 
   // without browserify
   var fs = require('fs');
