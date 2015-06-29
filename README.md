@@ -98,3 +98,15 @@ Either way, it takes no options.
     .pipe(unreachable())
     .pipe(fs.createWriteStream('output.js'));
 ```
+
+## changelog
+
+### 0.1.0
+
+* safe implementation
+* advanced tests
+
+### 0.0.1
+
+* tests
+* initial dumb implementation
