@@ -101,6 +101,11 @@ Either way, it takes no options.
 
 ## changelog
 
+### 0.1.1
+
+* added changelog to readme
+* include readme in package files
+
 ### 0.1.0
 
 * safe implementation
