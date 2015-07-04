@@ -12,7 +12,8 @@ __Note__: Works safely on ES5 code. Does __not__ work safely on ES6 code __yet__
 ## introduction
 
 The [browserify implementation of `process`](https://github.com/defunctzombie/node-process) 
-has a special `browser` member set to `true`, which is not present in the 
+and the [webpack implementation of `process`](https://github.com/webpack/node-libs-browser)
+both have a special `browser` member set to `true`, which is not present in the 
 [node implementation of `process`](https://nodejs.org/api/process.html).
 
 ```js
@@ -27,7 +28,7 @@ has a special `browser` member set to `true`, which is not present in the
 
 This can be referenced in isomorphic code that
 * adjusts it's behavior depending on which environment it's in
-* is fully portable within the nodejs/iojs/browserify ecosystem, and
+* is fully portable within the nodejs/iojs/browserify/webpack ecosystem, and
 * is concise and [Don't Repeat Yourself (DRY)](http://programmer.97things.oreilly.com/wiki/index.php/Don't_Repeat_Yourself)
 
 ```js
