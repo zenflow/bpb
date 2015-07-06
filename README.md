@@ -1,8 +1,6 @@
 # bpb
 browserify transform to safely replace `process.browser` with `true` by working on the Abstract Syntax Tree (AST) 
 
-__Note__: Works safely on ES5 code. Does __not__ work safely on ES6 code __yet__. Will not detect block-scoped `let` `const` and `function` declarations that override the `process` identifier.
-
 [![build status](https://travis-ci.org/zenflow/bpb.svg?branch=master)](https://travis-ci.org/zenflow/bpb?branch=master)
 [![dependencies](https://david-dm.org/zenflow/bpb.svg)](https://david-dm.org/zenflow/bpb)
 [![dev-dependencies](https://david-dm.org/zenflow/bpb/dev-status.svg)](https://david-dm.org/zenflow/bpb#info=devDependencies)
@@ -11,10 +9,9 @@ __Note__: Works safely on ES5 code. Does __not__ work safely on ES6 code __yet__
 
 ## introduction
 
-The [browserify implementation of `process`](https://github.com/defunctzombie/node-process) 
-and the [webpack implementation of `process`](https://github.com/webpack/node-libs-browser)
-both have a special `browser` member set to `true`, which is not present in the 
-[node implementation of `process`](https://nodejs.org/api/process.html).
+[The browserify/webpack implementation of `process`](https://github.com/defunctzombie/node-process) 
+has a special `browser` member set to `true`, which is not present in 
+[the nodejs/iojs implementation of `process`](https://nodejs.org/api/process.html).
 
 ```js
 	// on node
@@ -76,31 +73,49 @@ For optimized build-sizes and or security, use bpb in combination with [unreacha
 ```
 ## usage 
 
-bpb can be used as a [browserify transform](https://github.com/substack/browserify-handbook#transforms), or a regular [transform stream](https://nodejs.org/api/stream.html). 
+*bpb can be used as a [browserify transform](https://github.com/substack/browserify-handbook#transforms), a
+[transform stream](https://nodejs.org/api/stream.html), or a synchronous function.*
 
-Either way, it takes no options.
+### options
+
+* ecmaVersion: Must be either 3, 5, or 6. Default is 5.
+
+All options are passed directly to [falafel](https://github.com/substack/node-falafel) which passes them directly to 
+[acorn](https://github.com/marijnh/acorn).
+
+### examples
 
 ```js
-  // with browserify
+  // as a browserify transform
   var browserify = require('browserify');
   var fs = require('fs');
   browserify('input.js')
-  	.transform('bpb')
+  	.transform('bpb', {/* options */})
   	.transform('unreachable-branch-transform')
   	.bundle()
   	.pipe(fs.createWriteStream('output.js'));
 
-  // without browserify
+  // as a transform stream
   var fs = require('fs');
   var bpb = require('bpb');
   var unreachable = require('unreachable-branch-transform');
   fs.createReadStream('input.js')
-    .pipe(bpb())
+    .pipe(bpb({/* options */}))
     .pipe(unreachable())
     .pipe(fs.createWriteStream('output.js'));
+    
+  // as a synchronous function
+  var bpb = require('bpb');
+  var unreachable = require('unreachable-branch-transform');
+  unreachable.transform(bpb.sync('foo(process.browser ? 1 : 2);', {/* options */}))
+  // -> 'foo(1)'
 ```
 
 ## changelog
+
+### 0.2.0
+
+* added es6 support
 
 ### 0.1.1
 
