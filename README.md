@@ -113,6 +113,10 @@ All options are passed directly to [falafel](https://github.com/substack/node-fa
 
 ## changelog
 
+### 0.2.1
+
+* return passthrough for json files
+
 ### 0.2.0
 
 * added es6 support
