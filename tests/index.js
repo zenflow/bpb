@@ -69,6 +69,19 @@ test('includes the right occurrences in es6 code', getTest({
     }
 ]));
 
+test('emit error on syntax error', function(t) {
+    t.plan(1);
+    concat('{')
+        .pipe(bpb())
+        .on("error", function(err) {
+            t.ok(err);
+            t.end();
+        })
+        .pipe(concat(function(data) {
+            t.ok(false);
+        }));
+});
+
 function getTest(){
     var options = (arguments[0] instanceof Array ? null : arguments[0]) || {};
     var test_cases = arguments[0] instanceof Array ? arguments[0] : arguments[1];
