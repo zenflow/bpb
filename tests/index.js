@@ -1,5 +1,5 @@
 var test = require('tape');
-var concat = require('concat-stream');
+var flat = require('flatstream');
 var bpb = require('../lib');
 
 test('excludes the right occurrences in es5 code', getTest([
@@ -71,13 +71,13 @@ test('includes the right occurrences in es6 code', getTest({
 
 test('emit error on syntax error', function(t) {
     t.plan(1);
-    concat('{')
+    flat('{')
         .pipe(bpb())
         .on("error", function(err) {
             t.ok(err);
             t.end();
         })
-        .pipe(concat(function(data) {
+        .pipe(flat(function(data) {
             t.ok(false);
         }));
 });
@@ -90,9 +90,9 @@ function getTest(){
         test_cases.forEach(function(test_case){
             var source = typeof test_case == 'object' ? test_case.source : test_case;
             var expected = typeof test_case == 'object' ? test_case.expected : test_case;
-            concat(source)
+            flat(source)
                 .pipe(bpb(options))
-                .pipe(concat(function(data){
+                .pipe(flat(function(data){
                     t.equal(data.toString('utf8'), expected);
                 }));
         })
