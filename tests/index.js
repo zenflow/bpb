@@ -75,10 +75,9 @@ test('emit error on syntax error', function(t) {
         .pipe(bpb())
         .on("error", function(err) {
             t.ok(err);
-            t.end();
         })
         .pipe(flat(function(data) {
-            t.ok(false);
+            t.fail();
         }));
 });
 
