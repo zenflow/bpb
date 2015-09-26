@@ -8,7 +8,8 @@ test('excludes the right occurrences in es5 code', getTest([
     '(function(){foo(process.browser); })(); var process; ',
     '(function(){foo(process.browser); var process; })(); ',
     '(function(process){foo(process.browser); })(); ',
-    '(function process(){foo(process.browser); })(); '
+    '(function process(){foo(process.browser); })(); ',
+    'try {} catch (process) {foo(process.browser); }'
 ]));
 
 test('includes the right occurrences in es5 code', getTest([
@@ -40,8 +41,7 @@ test('excludes the right occurrences in es6 code', getTest({
     '{foo(process.browser); let process; } ',
     '{foo(process.browser); function process(){} } ',
     'for (let process in {}){foo(process.browser); } ',
-    'for (let process = 0; !process; process++){foo(process.browser); } ',
-    'try {} catch (process) {foo(process.browser); }' // enough!
+    'for (let process = 0; !process; process++){foo(process.browser); } '
 ]));
 
 test('includes the right occurrences in es6 code', getTest({
